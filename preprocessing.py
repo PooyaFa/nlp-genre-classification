@@ -1,3 +1,5 @@
+import string
+
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -8,8 +10,7 @@ def data_cleaning(df):
     return df
 
 
-def preprocessing(row):
-    text = row['lyrics']
+def preprocessing(text):
     # ps = PorterStemmer()
     lemmatizer = WordNetLemmatizer()
 
@@ -21,7 +22,7 @@ def preprocessing(row):
     for word in word_tokens:
         stems.append(lemmatizer.lemmatize(word))
 
-    cleaned_text_set = [word for word in stems if word not in stop_words]
+    cleaned_text_set = [word for word in stems if word not in stop_words and word not in string.punctuation]
     clean_text = ' '.join(cleaned_text_set).strip()
 
     return clean_text
